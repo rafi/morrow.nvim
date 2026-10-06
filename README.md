@@ -9,7 +9,7 @@ final highlight groups.
 
 | Theme | Based on |
 |---|---|
-| `night` (default) | [Tomorrow Night for JetBrains](https://github.com/MenWhoRust/TomorrowNightTheme): Chris Kempson's mapping (purple keywords, blue functions, yellow types, red variables), italic comments and keywords, flat chrome with a raised status line |
+| `night` (default) | [Tomorrow Night for JetBrains](https://github.com/MenWhoRust/TomorrowNightTheme): Chris Kempson's mapping (purple keywords, blue functions, yellow types, red variables and fields, aqua operators), italic comments and keywords, flat chrome with a raised status line |
 | `hybrid` | [w0ng/vim-hybrid](https://github.com/w0ng/vim-hybrid) dark: blue keywords, yellow functions, orange types, hybrid's popup selection and dark gutter |
 | `rafi` | neohybrid: hybrid's code colors with purple identifiers, an olive status line and dark floats |
 

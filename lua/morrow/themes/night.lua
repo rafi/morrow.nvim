@@ -4,7 +4,8 @@
 -- panel sits on the editor background and borders draw the edges. Where
 -- the JetBrains scheme defines nothing, base16-vim decides. Three of its
 -- off-palette colors are replaced (inlay hints, folded text, the current
--- search), the rest are kept.
+-- search), the rest are kept. Deviation: operators take Kempson's aqua
+-- from his TextMate and Vim schemes, where JetBrains leaves them plain.
 
 ---@type morrow.Theme
 local M = {
@@ -40,7 +41,8 @@ local M = {
 
 -- Kempson's mapping as the JetBrains scheme sets it: keywords purple,
 -- functions blue, types yellow, constants, numbers and parameters orange,
--- variables and fields red, operators and punctuation plain.
+-- variables, fields and keys red, operators aqua (Kempson's TextMate),
+-- punctuation plain.
 ---@param c morrow.Theme
 ---@return morrow.Syntax
 function M.syntax(c)
@@ -67,7 +69,7 @@ function M.syntax(c)
 		parameter        = c.orange,
 		constructor      = c.yellow,
 		identifier       = c.red,
-		operator         = c.text,
+		operator         = c.cyan,
 		punct            = c.text,
 		preproc          = c.magenta,
 		special          = c.cyan,
