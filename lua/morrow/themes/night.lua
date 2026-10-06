@@ -2,10 +2,11 @@
 -- (https://github.com/MenWhoRust/TomorrowNightTheme): base16 grays, Chris
 -- Kempson's accents and mapping, and the IDE's flat chrome, where every
 -- panel sits on the editor background and borders draw the edges. Where
--- the JetBrains scheme defines nothing, base16-vim decides. Three of its
+-- the JetBrains scheme defines nothing, base16-vim decides. Four of its
 -- off-palette colors are replaced (inlay hints, folded text, the current
--- search), the rest are kept. Deviation: operators take Kempson's aqua
--- from his TextMate and Vim schemes, where JetBrains leaves them plain.
+-- search, URLs: aqua instead of the too-bright #89ddf7), the rest are
+-- kept. Deviation: operators take Kempson's aqua from his TextMate and
+-- Vim schemes, where JetBrains leaves them plain.
 
 ---@type morrow.Theme
 local M = {
@@ -34,7 +35,6 @@ local M = {
 
 	-- JetBrains editor scheme extras
 	todo  = '#ffeb95',
-	link  = '#89ddf7',
 	label = '#c3d3de',
 	-- stylua: ignore end
 }
@@ -82,7 +82,7 @@ function M.syntax(c)
 		deprecated       = c.brown,
 		heading          = { c.green, c.blue, c.blue, c.blue, c.blue, c.blue },
 		raw              = c.magenta,
-		url              = c.link,
+		url              = c.cyan, -- softer than JetBrains' #89ddf7 hyperlinks
 		quote            = c.blue,
 		list             = c.red,
 		strong           = c.red,

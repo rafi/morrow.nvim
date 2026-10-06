@@ -114,7 +114,7 @@ test('night uses the JetBrains Tomorrow Night mapping and chrome', function()
 	eq('#de935f', syn.parameter)
 	eq('#cc6666', syn.variable)
 	eq('#c5c8c6', syn.punct)
-	eq('#89ddf7', syn.url)
+	eq('#8abeb7', syn.url)
 	eq('#ffeb95', syn.todo)
 	eq(
 		{ '#b5bd68', '#81a2be', '#81a2be', '#81a2be', '#81a2be', '#81a2be' },
