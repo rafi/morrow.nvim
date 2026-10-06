@@ -14,7 +14,13 @@ end)
 test(
 	'the morrow lualine theme follows the configured theme and styles',
 	function()
+		-- Without an active morrow colorscheme, so the configured theme
+		-- decides rather than vim.g.colors_name left by earlier cases.
+		fresh({ theme = 'rafi' })
+		vim.g.colors_name = nil
+		eq('#30302c', require('lualine.themes.morrow').normal.c.bg)
 		fresh({ theme = 'night', styles = { statusline = 'olive' } })
+		vim.g.colors_name = nil
 		local t = require('lualine.themes.morrow')
 		eq('#313027', t.normal.c.bg)
 		eq('#4f4a30', t.normal.z.bg)

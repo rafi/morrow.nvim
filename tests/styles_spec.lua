@@ -5,7 +5,7 @@ local function colors(opts)
 	return (require('morrow.themes').setup())
 end
 
-test('night elements default to its flat chrome', function()
+test('night elements default to its literal chrome', function()
 	local c = colors({ theme = 'night' })
 	eq({ bg = '#282a2e', fg = '#c5c8c6', fg_nc = '#969896' }, c.statusline)
 	-- winbar reuses the statusline's style value with the winbar rule

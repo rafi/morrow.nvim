@@ -143,7 +143,7 @@ test('rafi extends hybrid with 5281fc32 colors', function()
 	local syn = t.syntax(t)
 	eq('#707880', syn.comment) -- inherited from hybrid
 	eq('#81a2be', syn.keyword)
-	eq('#b294bb', syn.variable) -- hybrid keeps the foreground here
+	eq('#b294bb', syn.variable) -- rafi's own; hybrid uses the foreground
 	eq('#b4b7b4', syn.punct)
 	eq('#e3a377', syn.regex)
 	eq('#b5bd68', syn.keyword_return)
