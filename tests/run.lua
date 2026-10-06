@@ -55,11 +55,15 @@ function _G.raises(text, fn)
 end
 
 -- Fresh morrow state for a case: unload morrow's modules (they keep the
--- setup() options and Util.bg), then store `opts` with the cache off
--- unless the case turns it on.
+-- setup() options and Util.bg) and the morrow lualine themes, then store
+-- `opts` with the cache off unless the case turns it on.
 function _G.fresh(opts)
 	for name in pairs(package.loaded) do
-		if name == 'morrow' or name:match('^morrow%.') then
+		if
+			name == 'morrow'
+			or name:match('^morrow%.')
+			or name:match('^lualine%.themes%._?morrow')
+		then
 			package.loaded[name] = nil
 		end
 	end
