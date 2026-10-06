@@ -28,6 +28,7 @@
 ---@field transparent? boolean
 ---@field terminal_colors? boolean
 ---@field styles? morrow.Styles
+---@field plugins? table<string, boolean|{enabled: boolean}>
 ---@field on_colors? fun(c: morrow.Colors)
 ---@field on_highlights? fun(hl: morrow.Highlights, c: morrow.Colors)
 

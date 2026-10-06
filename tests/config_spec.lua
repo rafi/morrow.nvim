@@ -10,6 +10,9 @@ test('defaults use the night theme and no element styles', function()
 		{ comments = {}, keywords = {}, functions = {}, variables = {} },
 		Config.defaults.styles
 	)
+	eq(true, Config.defaults.plugins.auto)
+	-- Neither lazy.nvim nor vim.pack is loaded in the test Neovim.
+	eq(true, Config.defaults.plugins.all)
 end)
 
 test('options are the defaults before setup', function()

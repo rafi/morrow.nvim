@@ -19,6 +19,13 @@ M.defaults = {
 		-- take a palette name, 'normal', 'transparent' or a table of
 		-- colors; border takes a palette name, 'hidden' or '#rrggbb'.
 	},
+	plugins = {
+		-- Every integration, unless a plugin manager can tell which
+		-- plugins are installed.
+		all = not (package.loaded.lazy or package.loaded['vim.pack']),
+		-- Integrations for plugins lazy.nvim or vim.pack reports installed.
+		auto = true,
+	},
 	---@param c morrow.Colors
 	on_colors = function(c) end,
 	---@param hl morrow.Highlights
