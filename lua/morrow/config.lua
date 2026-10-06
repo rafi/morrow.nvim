@@ -1,93 +1,55 @@
--- Morrow configuration
--- https://github.com/rafi/morrow.nvim
+-- Morrow options: defaults, setup() and per-load overrides.
 
--- This is based on Nightfox at https://github.com/EdenEast/nightfox.nvim
+local M = {}
 
-local M = {
-	flavour = 'morrow-night',
-	has_options = false,
-}
-
-local defaults = {
-	compile_path = vim.fn.stdpath('cache') .. '/morrow',
-	compile_file_suffix = '_compiled',
-	kitty = vim.env.KITTY_WINDOW_ID and true or false,
-	transparent = false,
-	colorblind = {
-		enable = false,
-		simulate_only = false,
-		severity = {
-			protan = 0,
-			deutan = 0,
-			tritan = 0,
-		},
-	},
+---@type morrow.Config
+M.defaults = {
+	theme = 'night', -- 'night', 'hybrid' or 'rafi'
+	transparent = false, -- no background on Normal or elements painted with it
+	terminal_colors = true, -- set g:terminal_color_0 .. 15
 	styles = {
-		comments = 'NONE',
-		conditionals = 'NONE',
-		constants = 'NONE',
-		functions = 'NONE',
-		keywords = 'NONE',
-		numbers = 'NONE',
-		operators = 'NONE',
-		statements = 'NONE',
-		strings = 'NONE',
-		structures = 'NONE',
-		types = 'NONE',
-		variables = 'NONE',
+		-- Syntax attributes (any nvim_set_hl attributes), merged over the
+		-- theme's own (night makes comments and keywords italic).
+		comments = {},
+		keywords = {},
+		functions = {},
+		variables = {},
+		-- Elements (statusline, winbar, tabline, float, pmenu, picker,
+		-- sidebar, code, separator, inactive, cmdline, gutter, cursorline)
+		-- take a palette name, 'normal', 'transparent' or a table of
+		-- colors; border takes a palette name, 'hidden' or '#rrggbb'.
 	},
-	inverse = {
-		match_paren = false,
-		visual = false,
-		search = false,
-	},
-	modules = {
-		diagnostic = {
-			-- This is linked to so much that is needs to be enabled. This is here primarily
-			-- for the extra options that can be added with modules
-			enable = true,
-			background = true,
-		},
-		lsp_semantic_tokens = true,
-		treesitter = true,
-	},
+	---@param c morrow.Colors
+	on_colors = function(c) end,
+	---@param hl morrow.Highlights
+	---@param c morrow.Colors
+	on_highlights = function(hl, c) end,
 }
 
-M.path_sep = jit and (jit.os == 'Windows' and '\\' or '/')
-	or package.config:sub(1, 1)
+---@type morrow.Config
+M.options = nil
 
-M.options = vim.deepcopy(defaults)
-
-M.module_names = {
-	'diagnostic',
-	'lsp_semantic_tokens',
-	'treesitter',
-}
-
-function M.set_flavour(name)
-	M.flavour = name
+-- Store the user's options merged over the defaults.
+---@param options? morrow.Config
+function M.setup(options)
+	M.options = vim.tbl_deep_extend('force', {}, M.defaults, options or {})
 end
 
-function M.set_options(opts)
-	opts = opts or {}
-	M.options = vim.tbl_deep_extend('force', M.options, opts)
-	M.has_options = true
+-- Options for one load: `opts` merged over the stored options, or the
+-- stored options themselves when there is nothing to merge.
+---@param opts? morrow.Config
+---@return morrow.Config
+function M.extend(opts)
+	return opts and vim.tbl_deep_extend('force', {}, M.options, opts) or M.options
 end
 
-function M.reset()
-	M.options = vim.deepcopy(defaults)
-end
-
-function M.get_compiled_info(opts)
-	local output_path = opts.output_path or M.options.compile_path
-	local file_suffix = opts.file_suffix or M.options.compile_file_suffix
-	local style = opts.name or M.flavour
-	return output_path, output_path .. M.path_sep .. style .. file_suffix
-end
-
-function M.hash()
-	local hash = require('morrow.util').hash(M.options)
-	return hash and hash or 0
-end
+-- Before setup() runs, `options` reads as the defaults.
+setmetatable(M, {
+	__index = function(_, k)
+		if k == 'options' then
+			return M.defaults
+		end
+	end,
+})
 
 return M
