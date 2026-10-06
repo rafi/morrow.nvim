@@ -2,6 +2,7 @@
 -- then each enabled plugin's file, flattened for nvim_set_hl, then the
 -- user's on_highlights.
 
+local Config = require('morrow.config')
 local Util = require('morrow.util')
 
 local M = {}
@@ -128,12 +129,29 @@ local function build(names, c, opts)
 	return Util.resolve(ret)
 end
 
--- The final groups for `c`, after on_highlights.
+-- The final groups for `c`: from the cache when its inputs match (plugin
+-- version and checkout, colors, enabled group files, styles and
+-- transparency), else built and cached. on_highlights always runs after,
+-- because a function can't be part of the key.
 ---@param c morrow.Colors
 ---@param opts morrow.Config
 ---@return morrow.Highlights
 function M.setup(c, opts)
-	local groups = build(M.names(opts), c, opts)
+	local names = M.names(opts)
+	local inputs = {
+		version = Config.version .. ':' .. vim.fn.getftime(Util.root .. '/.git'),
+		colors = c,
+		plugins = names,
+		opts = { styles = opts.styles, transparent = opts.transparent },
+	}
+	local cache = opts.cache and Util.cache.read(opts.theme)
+	local groups = cache and vim.deep_equal(inputs, cache.inputs) and cache.groups
+	if not groups then
+		groups = build(names, c, opts)
+		if opts.cache then
+			Util.cache.write(opts.theme, { groups = groups, inputs = inputs })
+		end
+	end
 	opts.on_highlights(groups, c)
 	return groups
 end

@@ -6,6 +6,7 @@ test('defaults use the night theme and no element styles', function()
 	eq('night', Config.defaults.theme)
 	eq(false, Config.defaults.transparent)
 	eq(true, Config.defaults.terminal_colors)
+	eq(true, Config.defaults.cache)
 	eq(
 		{ comments = {}, keywords = {}, functions = {}, variables = {} },
 		Config.defaults.styles
@@ -31,6 +32,7 @@ test('setup merges user options over the defaults', function()
 	eq('hybrid', Config.options.theme)
 	eq('olive', Config.options.styles.statusline)
 	eq({}, Config.options.styles.comments)
+	eq(false, Config.options.cache) -- fresh() turns the cache off
 end)
 
 test('extend overrides per load without changing options', function()

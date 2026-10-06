@@ -29,6 +29,7 @@
 ---@field terminal_colors? boolean
 ---@field styles? morrow.Styles
 ---@field plugins? table<string, boolean|{enabled: boolean}>
+---@field cache? boolean
 ---@field on_colors? fun(c: morrow.Colors)
 ---@field on_highlights? fun(hl: morrow.Highlights, c: morrow.Colors)
 
@@ -70,3 +71,7 @@
 ---@alias morrow.Highlights table<string, morrow.Highlight|string>
 
 ---@alias morrow.HighlightsFn fun(c: morrow.Colors, opts: morrow.Config): morrow.Highlights
+
+---@class morrow.Cache
+---@field groups morrow.Highlights
+---@field inputs table

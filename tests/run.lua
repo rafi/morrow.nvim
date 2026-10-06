@@ -55,14 +55,17 @@ function _G.raises(text, fn)
 end
 
 -- Fresh morrow state for a case: unload morrow's modules (they keep the
--- setup() options and Util.bg), then store `opts`.
+-- setup() options and Util.bg), then store `opts` with the cache off
+-- unless the case turns it on.
 function _G.fresh(opts)
 	for name in pairs(package.loaded) do
 		if name == 'morrow' or name:match('^morrow%.') then
 			package.loaded[name] = nil
 		end
 	end
-	require('morrow.config').setup(opts)
+	require('morrow.config').setup(
+		vim.tbl_extend('force', { cache = false }, opts or {})
+	)
 end
 
 local files = #_G.arg > 0 and _G.arg

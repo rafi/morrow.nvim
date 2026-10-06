@@ -86,4 +86,55 @@ function M.resolve(groups)
 	return groups
 end
 
+M.cache = {}
+
+-- Cache file for one theme.
+---@param key string theme name
+---@return string
+function M.cache.file(key)
+	return vim.fn.stdpath('cache') .. '/morrow-' .. key .. '.json'
+end
+
+-- The cached { groups, inputs } for a theme, or nil when the file is
+-- missing, unreadable or not shaped like a cache.
+---@param key string
+---@return morrow.Cache?
+function M.cache.read(key)
+	local ok, ret = pcall(function()
+		local fd = assert(io.open(M.cache.file(key), 'r'))
+		local data = fd:read('*a')
+		fd:close()
+		return vim.json.decode(data, { luanil = { object = true, array = true } })
+	end)
+	if
+		ok
+		and type(ret) == 'table'
+		and type(ret.groups) == 'table'
+		and type(ret.inputs) == 'table'
+	then
+		return ret
+	end
+end
+
+-- Write a theme's cache; failures (read-only cache dir) are ignored.
+---@param key string
+---@param data morrow.Cache
+function M.cache.write(key, data)
+	pcall(function()
+		local file = M.cache.file(key)
+		vim.fn.mkdir(vim.fn.fnamemodify(file, ':h'), 'p')
+		local fd = assert(io.open(file, 'w'))
+		fd:write(vim.json.encode(data))
+		fd:close()
+	end)
+end
+
+-- Remove every theme's cache file.
+function M.cache.clear()
+	local pattern = vim.fn.stdpath('cache') .. '/morrow-*.json'
+	for _, file in ipairs(vim.fn.glob(pattern, false, true)) do
+		vim.uv.fs_unlink(file)
+	end
+end
+
 return M

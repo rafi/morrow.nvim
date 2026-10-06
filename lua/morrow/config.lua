@@ -2,6 +2,9 @@
 
 local M = {}
 
+-- Part of the cache key; bump when group files change in a release.
+M.version = '0.1.0'
+
 ---@type morrow.Config
 M.defaults = {
 	theme = 'night', -- 'night', 'hybrid' or 'rafi'
@@ -26,6 +29,7 @@ M.defaults = {
 		-- Integrations for plugins lazy.nvim or vim.pack reports installed.
 		auto = true,
 	},
+	cache = true, -- cache final groups in stdpath('cache')/morrow-<theme>.json
 	---@param c morrow.Colors
 	on_colors = function(c) end,
 	---@param hl morrow.Highlights
