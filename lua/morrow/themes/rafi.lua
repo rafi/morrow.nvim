@@ -73,6 +73,8 @@ ret.incsearch = { bg = '#b5bd68', fg = '#1d1f21' }
 ret.selection = '#4d2238'
 ret.match_paren = { fg = '#81a2be', bg = '#425059' }
 ret.folded = { fg = '#666656' }
+-- Neohybrid's NeoTreeGitModified: modified files in file trees and pickers.
+ret.git = { change = '#c88d8d' }
 -- 5281fc32's blends of #008500 and #800000 over the background.
 -- stylua: ignore
 ret.diff = {
