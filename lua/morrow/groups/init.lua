@@ -130,7 +130,7 @@ local function build(names, c, opts)
 end
 
 -- The final groups for `c`: from the cache when its inputs match (plugin
--- version and checkout, colors, enabled group files, styles and
+-- version and newest Lua file mtime, colors, enabled group files, styles and
 -- transparency), else built and cached. on_highlights always runs after,
 -- because a function can't be part of the key.
 ---@param c morrow.Colors
@@ -139,7 +139,7 @@ end
 function M.setup(c, opts)
 	local names = M.names(opts)
 	local inputs = {
-		version = Config.version .. ':' .. vim.fn.getftime(Util.root .. '/.git'),
+		version = Config.version .. ':' .. Util.cache.mtime(),
 		colors = c,
 		plugins = names,
 		opts = { styles = opts.styles, transparent = opts.transparent },

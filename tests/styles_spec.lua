@@ -27,10 +27,24 @@ test('a palette restyles one element from its gray ramp', function()
 	eq({ bg = '#313027', fg = '#a7a89b', fg_nc = '#666656' }, c.statusline)
 	-- winbar has no style and follows the statusline's palette
 	eq({ bg = '#313027', fg = '#909083', bg_nc = '#19190e' }, c.winbar)
-	-- tabline keeps night's own literal
+	-- tabline follows morrow's rule, not the statusline's palette
 	eq('#1d1f21', c.tabline.bg)
 	-- the rest of the theme is untouched
 	eq('#282a2e', c.surface0)
+end)
+
+test('every theme draws its tabline deeper than the editor', function()
+	for _, theme in ipairs({ 'night', 'hybrid', 'rafi' }) do
+		local c = colors({ theme = theme })
+		local function n(hex)
+			return tonumber(hex:sub(2), 16)
+		end
+		-- the bar is below the editor, inactive tabs are lighter than the
+		-- bar, and the active tab is lighter still
+		assert(n(c.tabline.fill) < n(c.base), theme)
+		assert(n(c.tabline.fill) < n(c.tabline.bg), theme)
+		assert(n(c.tabline.bg) < n(c.tabline.sel), theme)
+	end
 end)
 
 test('the four palettes give their raised status lines', function()
@@ -105,11 +119,11 @@ end)
 test('hybrid and rafi keep their literal chrome', function()
 	local c = colors({ theme = 'hybrid' })
 	eq({
-		bg = '#282a2e',
-		fg = '#707880',
-		fill = '#2d3034',
-		sel = '#1d1f21',
-		sel_fg = '#c5c8c6',
+		bg = '#1d1f21',
+		fg = '#858c92',
+		fill = '#101113',
+		sel = '#373b41',
+		sel_fg = '#9aa0a3',
 	}, c.tabline)
 	eq({
 		bg = '#373b41',

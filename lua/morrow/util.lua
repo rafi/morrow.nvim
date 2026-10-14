@@ -95,6 +95,25 @@ function M.cache.file(key)
 	return vim.fn.stdpath('cache') .. '/morrow-' .. key .. '.json'
 end
 
+-- Newest modification time of the plugin's Lua files, as 'sec.nsec'.
+-- Part of the cache key, so editing a group, palette or theme file
+-- rebuilds the cache.
+---@return string
+function M.cache.mtime()
+	local dir = M.root .. '/lua/morrow'
+	local sec, nsec = 0, 0
+	for name, kind in vim.fs.dir(dir, { depth = 5 }) do
+		if kind == 'file' and name:sub(-4) == '.lua' then
+			local stat = vim.uv.fs_stat(dir .. '/' .. name)
+			local m = stat and stat.mtime
+			if m and (m.sec > sec or (m.sec == sec and m.nsec > nsec)) then
+				sec, nsec = m.sec, m.nsec
+			end
+		end
+	end
+	return sec .. '.' .. nsec
+end
+
 -- The cached { groups, inputs } for a theme, or nil when the file is
 -- missing, unreadable or not shaped like a cache.
 ---@param key string

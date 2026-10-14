@@ -2,7 +2,9 @@
 -- own builtins, regexes, tags and markup, an olive status line, a dark
 -- slate float and a blue popup selection. It extends hybrid: grays it
 -- doesn't override, accents and most syntax are inherited, while styles
--- and role tables are replaced whole so no hybrid field survives.
+-- and role tables are replaced whole so no hybrid field survives. The tab
+-- line is deliberately not neohybrid's: it follows morrow's rule, a deeper
+-- strip than the editor with a lighter active tab.
 
 local hybrid = require('morrow.themes.hybrid')
 local ret = vim.deepcopy(hybrid)
@@ -61,7 +63,7 @@ end
 ret.styles = {
 	statusline = { bg = '#30302c', fg = '#a8a897', fg_nc = '#666656' },
 	winbar     = { bg = '#30302c', fg = '#969896' },
-	tabline    = { bg = '#282a2e', fg = '#767676', fill = '#30302c', sel = '#969896', sel_fg = '#626262' },
+	tabline    = {}, -- morrow's rule; a table stops the statusline style leaking in
 	float      = { bg = '#171b21', border = '#425059' },
 	pmenu      = { bg = '#373b41', sel = '#465f90', sbar = '#30302c', thumb = '#707880' },
 	separator  = { fg = '#282a2e' },

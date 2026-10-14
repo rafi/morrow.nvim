@@ -91,11 +91,11 @@ end
 -- Chrome: the selection color for popups and a dark gutter. Upstream's
 -- reversed status and tab lines and selection-colored floats are dropped
 -- (too bright, and a selection inside a float was invisible): the status
--- line, winbar, tab line, floats and picker use morrow's element rules,
--- keeping only upstream's dark selected tab.
+-- line, winbar, tab line, floats and picker use morrow's element rules.
+-- Deviation: the tab line follows the rule too, a deeper strip than the
+-- editor with a lighter active tab.
 -- stylua: ignore
 M.styles = {
-	tabline    = { sel = '#1d1f21', sel_fg = '#c5c8c6' },
 	pmenu      = { bg = '#373b41', sel = '#c5c8c6', sel_fg = '#373b41' },
 	gutter     = { bg = '#1c1c1c', fg = '#373b41' },
 	separator  = { fg = '#303030' },

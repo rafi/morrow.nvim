@@ -19,7 +19,7 @@ end
 M.elements = {
 	statusline = function(g) return { bg = raised(g), fg = g.subtext0, fg_nc = g.overlay0 } end,
 	winbar     = function(g) return { bg = raised(g), fg = g.overlay2, bg_nc = g.mantle } end,
-	tabline    = function(g) return { bg = g.surface0, fill = raised(g), fg = g.overlay1, sel = g.overlay2, sel_fg = g.overlay0 } end,
+	tabline    = function(g) return { bg = g.base, fill = g.crust, fg = g.overlay2, sel = g.surface1, sel_fg = g.subtext0 } end,
 	float      = function(g) return { bg = g.mantle, border = g.surface2, title = g.yellow, footer = g.overlay1 } end,
 	pmenu      = function(g) return { bg = g.surface1, sel = Util.blend(g.blue, 0.4, g.surface1), sbar = g.surface0, thumb = g.overlay1, border = g.overlay2 } end,
 	picker     = function(g) return { bg = g.mantle, border = g.surface2, title = g.yellow } end,

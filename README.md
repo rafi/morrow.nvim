@@ -150,6 +150,5 @@ plugins = { all = false, auto = true, snacks = false, ['mini.icons'] = true }
 nvim --headless --clean -u NONE -l tests/run.lua
 ```
 
-Set `cache = false` while editing group files, or clear the cache with
-`require('morrow.util').cache.clear()`; the cache only notices plugin
-updates and color changes.
+The cache rebuilds when the plugin version, its Lua files or the colors
+change. Clear it with `require('morrow.util').cache.clear()`.

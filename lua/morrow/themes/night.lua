@@ -5,8 +5,9 @@
 -- the JetBrains scheme defines nothing, base16-vim decides. Four of its
 -- off-palette colors are replaced (inlay hints, folded text, the current
 -- search, URLs: aqua instead of the too-bright #89ddf7), the rest are
--- kept. Deviation: operators take Kempson's aqua from his TextMate and
--- Vim schemes, where JetBrains leaves them plain.
+-- kept. Deviations: operators take Kempson's aqua from his TextMate and
+-- Vim schemes, where JetBrains leaves them plain; the tab line is a deeper
+-- strip than the editor (crust) with the active tab on a lighter base02.
 
 ---@type morrow.Theme
 local M = {
@@ -98,7 +99,7 @@ M.styles = {
 	comments   = { italic = true },
 	keywords   = { italic = true },
 	statusline = { bg = '#282a2e', fg = '#c5c8c6', fg_nc = '#969896' },
-	tabline    = { bg = '#1d1f21', fill = '#1d1f21', fg = '#969896', sel = '#373b41', sel_fg = '#c5c8c6' },
+	tabline    = {}, -- morrow's rule; a table stops the statusline style leaking in
 	float      = { bg = '#1d1f21', border = '#373b41' },
 	pmenu      = { bg = '#1d1f21', sel = '#282a2e', border = '#373b41' },
 	separator  = { fg = '#373b41' },

@@ -44,6 +44,19 @@ test('changed colors, styles or plugins miss the cache', function()
 	eq(4, calls.n)
 end)
 
+test('an edited group file misses the cache', function()
+	local calls = start()
+	require('morrow').load()
+	local file = ROOT .. '/lua/morrow/groups/base.lua'
+	local stat = assert(vim.uv.fs_stat(file))
+	local now = os.time() + 60
+	vim.uv.fs_utime(file, now, now)
+	local ok, err = pcall(require('morrow').load)
+	vim.uv.fs_utime(file, stat.atime.sec, stat.mtime.sec)
+	assert(ok, err)
+	eq(2, calls.n)
+end)
+
 test('on_highlights applies on a cache hit', function()
 	local calls = start({
 		on_highlights = function(groups)
